@@ -276,17 +276,29 @@ h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;col
 /* ============ ABOUT / QUIÉNES SOMOS ============ */
 .about-wrap{display:grid;grid-template-columns:1fr 0.86fr;gap:70px;align-items:center;}
 .about-points{display:flex;flex-direction:column;gap:16px;margin-top:32px;}
-.about-cert{position:relative;}
+.about-cert{position:relative;perspective:1200px;}
 .about-cert-frame{
   border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;padding:14px;
   background:linear-gradient(160deg,#17171c,#0c0c0e);box-shadow:0 30px 70px -20px rgba(0,0,0,.55);
+  animation:certFloat 5.5s ease-in-out infinite;
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+  transform-style:preserve-3d;will-change:transform;
+}
+.about-cert-frame:hover{
+  transform:rotate3d(1,-1,0,4deg) translateY(-6px);
+  box-shadow:0 40px 90px -18px var(--gold-glow);
+  animation-play-state:paused;
 }
 .about-cert-frame img{width:100%;display:block;border-radius:calc(var(--radius-lg) - 10px);}
+@keyframes certFloat{
+  0%,100%{transform:translateY(0) rotate3d(1,-1,0,0deg);}
+  50%{transform:translateY(-10px) rotate3d(1,-1,0,1.5deg);}
+}
 .about-cert-tag{
   position:absolute;bottom:-16px;left:28px;background:linear-gradient(135deg,var(--gold-light),var(--gold));
   color:#1a1208;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;
   text-transform:uppercase;padding:10px 18px;border-radius:100px;box-shadow:0 10px 30px -6px var(--gold-glow);
-  white-space:nowrap;
+  white-space:nowrap;z-index:2;
 }
 
 /* ============ VIP STORY ============ */
@@ -536,6 +548,8 @@ footer{border-top:1px solid var(--line-soft);padding:80px 0 36px;background:var(
   .coverage-wrap{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}
   .diag-wrap{grid-template-columns:1fr;}
+  .about-wrap{grid-template-columns:1fr;gap:48px;}
+  .about-cert{order:-1;max-width:420px;margin:0 auto;}
 }
 @media (max-width:768px){
   .container{padding:0 22px;}
@@ -557,6 +571,8 @@ footer{border-top:1px solid var(--line-soft);padding:80px 0 36px;background:var(
   .process-row{grid-template-columns:60px 1fr;}
   .zenith-panel{right:16px;left:16px;width:auto;bottom:96px;}
   .zenith-toggle{right:18px;bottom:18px;}
+  .about-cert{max-width:340px;}
+  .about-cert-tag{left:50%;transform:translateX(-50%);font-size:10px;padding:9px 14px;}
 
   /* Diagnóstico IA - mobile */
   .diag-result-top{padding:24px 20px;}
@@ -642,7 +658,8 @@ footer{border-top:1px solid var(--line-soft);padding:80px 0 36px;background:var(
 </section>
 
 <!-- ABOUT / QUIÉNES SOMOS -->
-<section class="section" id="nosotros">
+<section class="section section-photo" id="nosotros">
+<div class="section-photo-img" style="background-image:url('https://res.cloudinary.com/dgp7uhps3/image/upload/v1782876922/IMG_8299_pqlnpv.jpg')" aria-hidden="true"></div>
   <div class="container">
     <div class="about-wrap">
       <div class="about-info reveal">
