@@ -972,6 +972,40 @@ footer{border-top:1px solid var(--line-soft);padding:80px 0 36px;background:var(
 </div>
 
 <script>
+/* ================= HERO VIDEO AUTOPLAY (fallback robusto) ================= */
+(function(){
+  const heroVideo = document.querySelector('.hero-video');
+  if(!heroVideo) return;
+  heroVideo.muted = true;
+  heroVideo.defaultMuted = true;
+  heroVideo.playsInline = true;
+
+  function attemptPlay(){
+    const p = heroVideo.play();
+    if(p && typeof p.catch === 'function'){
+      p.catch(()=>{
+        // El navegador bloqueó el autoplay (política de datos/energía, etc.)
+        // Reintentamos apenas haya cualquier primer gesto del usuario.
+        const resume = () => { heroVideo.play().catch(()=>{}); };
+        ['touchstart','click','scroll','keydown'].forEach(evt=>{
+          document.addEventListener(evt, resume, { once:true, passive:true });
+        });
+      });
+    }
+  }
+
+  if(heroVideo.readyState >= 3){
+    attemptPlay();
+  } else {
+    heroVideo.addEventListener('loadeddata', attemptPlay, { once:true });
+    heroVideo.addEventListener('canplay', attemptPlay, { once:true });
+  }
+  // Si la pestaña vuelve a estar visible y el video quedó pausado, lo retomamos.
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.visibilityState === 'visible' && heroVideo.paused) attemptPlay();
+  });
+})();
+
 /* ================= CONFIG ================= */
 const WHATSAPP_NUMBER = "521234567890"; // TODO: reemplazar con el número real de WhatsApp (formato sin + ni espacios)
 
