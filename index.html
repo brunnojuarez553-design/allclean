@@ -273,6 +273,22 @@ h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;col
 .ba-handle-grab svg{width:16px;height:16px;color:#1a1208;}
 .ba-caption{font-size:14.5px;color:var(--text-dim);text-align:center;}
 
+/* ============ ABOUT / QUIÉNES SOMOS ============ */
+.about-wrap{display:grid;grid-template-columns:1fr 0.86fr;gap:70px;align-items:center;}
+.about-points{display:flex;flex-direction:column;gap:16px;margin-top:32px;}
+.about-cert{position:relative;}
+.about-cert-frame{
+  border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;padding:14px;
+  background:linear-gradient(160deg,#17171c,#0c0c0e);box-shadow:0 30px 70px -20px rgba(0,0,0,.55);
+}
+.about-cert-frame img{width:100%;display:block;border-radius:calc(var(--radius-lg) - 10px);}
+.about-cert-tag{
+  position:absolute;bottom:-16px;left:28px;background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  color:#1a1208;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;padding:10px 18px;border-radius:100px;box-shadow:0 10px 30px -6px var(--gold-glow);
+  white-space:nowrap;
+}
+
 /* ============ VIP STORY ============ */
 .vip{padding:160px 0;position:relative;background:
   radial-gradient(ellipse 50% 40% at 50% 0%, rgba(184,146,90,.08), transparent 60%), var(--bg);
@@ -564,6 +580,7 @@ footer{border-top:1px solid var(--line-soft);padding:80px 0 36px;background:var(
   <div class="container">
     <a href="#hero" class="nav-logo"><img src="https://res.cloudinary.com/dgp7uhps3/image/upload/v1782771252/IMG_8264_wz7hwt_s2d4ph.png" alt="All Clean Carwash & Detailing"></a>
     <div class="nav-links">
+      <a href="#nosotros">Nosotros</a>
       <a href="#servicios">Servicios</a>
       <a href="#galeria">Galería</a>
       <a href="#vip">Experiencia VIP</a>
@@ -578,6 +595,7 @@ footer{border-top:1px solid var(--line-soft);padding:80px 0 36px;background:var(
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
+  <a href="#nosotros">Nosotros</a>
   <a href="#servicios">Servicios</a>
   <a href="#galeria">Galería</a>
   <a href="#vip">Experiencia VIP</a>
@@ -611,6 +629,30 @@ footer{border-top:1px solid var(--line-soft);padding:80px 0 36px;background:var(
     <div class="trust-item"><span class="trust-num" style="font-size:22px;">A domicilio</span><span class="trust-label">En toda la zona de cobertura</span></div>
   </div>
   <div class="scroll-cue"><span class="line"></span>DESLIZÁ</div>
+</section>
+
+<!-- ABOUT / QUIÉNES SOMOS -->
+<section class="section" id="nosotros">
+  <div class="container">
+    <div class="about-wrap">
+      <div class="about-info reveal">
+        <p class="eyebrow">QUIÉNES SOMOS</p>
+        <h2 class="h2">Detrás de cada detalle, un oficio certificado</h2>
+        <p class="lead">All Clean nació de una obsesión real por el detailing automotriz. No improvisamos técnicas ni usamos productos genéricos: cada servicio parte de una formación profesional certificada, la misma que aplicamos auto por auto, sin atajos.</p>
+        <div class="about-points">
+          <div class="booking-point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Formación certificada en detailing automotriz profesional</div>
+          <div class="booking-point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a4 4 0 10-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2 2-2.5-.5-.5-2.5z"/></svg>Técnicas y productos de nivel taller especializado</div>
+          <div class="booking-point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>Criterio profesional en cada diagnóstico, no promesas al aire</div>
+        </div>
+      </div>
+      <div class="about-cert reveal">
+        <div class="about-cert-frame">
+          <img src="https://res.cloudinary.com/dgp7uhps3/image/upload/v1782769943/IMG_8263_saqsfg.jpg" alt="Certificado de Detallador Automotriz Profesional — All Clean" loading="lazy">
+        </div>
+        <span class="about-cert-tag">Detallador Automotriz Certificado</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- WHY -->
@@ -927,6 +969,7 @@ footer{border-top:1px solid var(--line-soft);padding:80px 0 36px;background:var(
     </div>
     <div class="footer-col">
       <h4>Navegación</h4>
+      <a href="#nosotros">Nosotros</a>
       <a href="#servicios">Servicios</a>
       <a href="#galeria">Galería</a>
       <a href="#vip">Experiencia VIP</a>
@@ -1533,27 +1576,18 @@ zenithForm.addEventListener('submit', async function(e){
     ].join(' ');
 
     try {
-      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      const resp = await fetch('/api/vision', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 700,
-          messages: [{
-            role: 'user',
-            content: [{
-              type: 'image',
-              source: { type: 'base64', media_type: 'image/jpeg', data: currentBase64 }
-            }, {
-              type: 'text',
-              text: prompt
-            }]
-          }]
+          image: currentBase64,
+          mimeType: 'image/jpeg',
+          prompt: prompt
         })
       });
       const data = await resp.json();
-      if(data.error) throw new Error(data.error.message);
-      let raw = (data.content||[]).map(c=>c.text||'').join('').trim();
+      if(data.error) throw new Error(data.error);
+      let raw = (data.content || '').trim();
       raw = raw.replace(/```json|```/g,'').trim();
       const parsed = JSON.parse(raw);
       renderResult(parsed);
